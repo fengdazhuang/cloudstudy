@@ -16,6 +16,7 @@
     <module>provider-payment8002</module>
     <module>provider-payment8004</module>
     <module>consumer-zk-client80</module>
+    <module>consumer-feigen-client80</module>
   </modules>
   <packaging>pom</packaging>
 

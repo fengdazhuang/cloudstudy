@@ -4,13 +4,20 @@ import com.fzz.springcloud.entity.CommonResult;
 import com.fzz.springcloud.entity.Payment;
 import com.fzz.springcloud.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
+
+    @Value("${server.port}")
+    private String serverPort;
 
     @PostMapping("/payment/create")
     public CommonResult<Integer> create(@RequestBody Payment payment){
@@ -30,6 +37,22 @@ public class PaymentController {
         }else{
             return new CommonResult<>(404,"查不到id为"+id+"的数据",null);
         }
+    }
+
+    @GetMapping("/payment/ribbon")
+    public String getServerPort(){
+        return serverPort;
+    }
+
+    @GetMapping("/payment/feign/timeout")
+    public String testTimeout(){
+        try {
+            TimeUnit.SECONDS.sleep(3);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return serverPort;
     }
 
 }
